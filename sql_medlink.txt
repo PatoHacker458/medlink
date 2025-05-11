@@ -1,0 +1,105 @@
+use medlink;
+
+create table usuario(
+    id_usuario int auto_increment primary key,
+    correo varchar(100) not null unique,
+    contrasena varchar(32) not null, #debe estar encriptada en md5
+    token varchar(64)
+);
+
+create table rol(
+    id_rol int auto_increment primary key,
+    rol varchar(50) not null
+);
+
+create table permiso(
+    id_permiso int auto_increment primary key,
+    permiso varchar(50) not null
+);
+
+create table usuario_rol(
+    id_usuario int not null,
+    id_rol int not null,
+    constraint pk_usuario_rol primary key (id_usuario,id_rol),
+    constraint fk1_usuario_rol foreign key (id_usuario) references usuario(id_usuario) on delete cascade on update cascade,
+    constraint fk2_usuario_rol foreign key  (id_rol) references rol(id_rol) on delete cascade on update cascade
+);
+
+create table permiso_rol(
+    id_permiso int not null,
+    id_rol int not null,
+    constraint pk_permiso_rol primary key (id_permiso,id_rol),
+    constraint fk1_permiso_rol foreign key (id_permiso) references permiso(id_permiso) on delete cascade on update cascade ,
+    constraint fk2_permiso_rol foreign key (id_rol) references rol(id_rol) on delete cascade on update cascade
+);
+
+create table especialidad(
+    id_especialidad int auto_increment primary key,
+    especialidad varchar(50) not null
+);
+
+create table consultorio (
+    id_consultorio int auto_increment primary key,
+    piso int not null,
+    habitacion int not null
+);
+
+create table staff (
+    id_staff int auto_increment primary key,
+    nombre varchar(50) not null,
+    primer_apellido varchar(50) not null,
+    segundo_apellido varchar(50),
+    id_usuario int not null,
+    constraint fk1_staff foreign key (id_usuario) references usuario(id_usuario)
+);
+
+create table medico (
+    id_medico int auto_increment primary key,
+    nombre varchar(50) not null,
+    primer_apellido varchar(50) not null,
+    segundo_apellido varchar(50),
+    licencia varchar(18) not null,
+    fotografia varchar(255) default 'house.jpg',
+    id_usuario int not null,
+    id_consultorio int not null,
+    id_especialidad int not null,
+    id_staff int,
+    constraint fk1_medico foreign key (id_usuario) references usuario(id_usuario) on update cascade,
+    constraint fk2_medico foreign key (id_consultorio) references consultorio(id_consultorio),
+    constraint fk3_medico foreign key (id_especialidad) references especialidad(id_especialidad),
+    constraint fk4_medico foreign key (id_staff) references  staff(id_staff)
+);
+
+create table paciente (
+    id_paciente int auto_increment primary key,
+    nombre varchar(50) not null,
+    primer_apellido varchar(50) not null,
+    segundo_apellido varchar(50),
+    nacimiento date not null,
+    telefono varchar(15) not null,
+    id_usuario int not null,
+    constraint fk_patient_id_user foreign key (id_usuario) references usuario(id_usuario)
+);
+
+create table archivo (
+    id_archivo int auto_increment primary key,
+    fecha date not null default (current_date),
+    tipo varchar(20),
+    ubicacion varchar(255),
+    id_usuario int not null,
+    constraint fk1_archivo foreign key (id_usuario) references usuario(id_usuario)
+);
+
+create table cita (
+    id_cita int auto_increment primary key,
+    fecha date not null,
+    hora time not null,
+    descripcion varchar(255),
+    precio decimal(10,2),
+    id_paciente int not null,
+    id_medico int not null,
+    id_consultorio int not null,
+    constraint fk1_cita foreign key (id_paciente) references paciente(id_paciente),
+    constraint fk2_cita foreign key (id_medico) references medico(id_medico),
+    constraint fk3_cita foreign key (id_consultorio) references consultorio(id_consultorio)
+);

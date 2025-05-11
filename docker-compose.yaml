@@ -1,0 +1,33 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 4584
+      MYSQL_DATABASE: medlink
+      MYSQL_USER: medlink
+      MYSQL_PASSWORD: 4584
+    ports:
+      - "3306:3306" # DATAGRIP
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: unless-stopped
+
+  composer:
+    image: composer:latest
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    restart: "no"
+
+volumes:
+  mariadb_data:

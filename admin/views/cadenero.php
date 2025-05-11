@@ -1,0 +1,1 @@
+<img src="../../images/login/cadenero.jpeg" alt="ACCESO DENEGADO">

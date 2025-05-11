@@ -1,0 +1,188 @@
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url('fonts\GoogleSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --color-primary: #7b00f1;
+    --color-muted: #ada5b4;
+}
+
+body {
+    display: grid;
+    place-items: center;
+    margin: 0;
+    height: 100vh;
+    background: #acbbff;
+    color: #2e2c2f;
+    transform: scale(0.9);
+    font-family: 'GoogleSans-Regular', sans-serif;
+}
+
+.blob, .orbit {
+    position: fixed;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+}
+
+.blob {
+    width: 80vw;
+    max-width: 700px;
+}
+
+@keyframes spin {
+    100% {
+        rotate: 1turn;
+    }
+}
+
+.orbit {
+    width: 100vw;
+    max-width: 720px;
+    height: 95vw; 
+    max-height: 720px; 
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+}
+
+@keyframes orbit-path {
+    from {
+        transform: rotate(0deg) translateY(calc(-1 * min(47.5vw, 360px) + 1px)) rotate(0deg); 
+    }
+    to {
+        transform: rotate(360deg) translateY(calc(-1 * min(47.5vw, 360px) + 1px)) rotate(-360deg); 
+    }
+}
+
+.orbit::before, .orbit::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: inherit;
+    background: #f39f1a;
+    top: 50%; 
+    left: 50%;
+    margin: -12px 0 0 -12px;
+    animation: orbit-path 10s infinite linear;
+}
+
+.orbit::before {
+     width: 18px;
+     height: 18px;
+     margin: -9px 0 0 -9px;
+}
+
+.orbit::after {
+    animation-delay: -5s;
+}
+
+.login {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 72px 32px 48px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.login img {
+    width: 96px;
+    margin: 0 0 32px;
+}
+
+.login :is(h2, h3) {
+    font-weight: 500;
+}
+
+.login h2 {
+    font-size: 18px;
+    margin: 0 0 6px;
+}
+
+.login h3 {
+    color: var(--color-muted);
+    font-size: 13px;
+    margin: 0 0 32px;
+}
+
+.login form {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+    margin: 0 0 20px;
+}
+
+.login :is(input, button) {
+    height: 52px;
+    font-family: inherit;
+    font-size: 15px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 8px;
+}
+
+.login .textbox {
+    position: relative;
+}
+
+label, input {
+    transition: 0.3s;
+}
+
+.textbox label {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    translate: 0 -50%;
+    transform-origin: 0 50%;
+    pointer-events: none;
+    color: var(--color-muted);
+}
+
+.textbox input {
+    width: 100%;
+    padding-top: 10px;
+    background: #f4f1f7;
+    outline: none;
+    color: inherit;
+    box-shadow: 0 0 0 2px transparent;
+}
+.textbox input:focus ~ label, .textbox input:valid ~ label {
+    scale: 0.725;
+    translate: 0 -112%;
+} 
+
+.login button {
+    color: #f9f9f9;
+    background: var(--color-primary);
+    transition: background-color 0.3s ease;
+}
+
+.login button:hover {
+    background: #6a00d1;
+}
+
+.login a{
+    font-size: 14px;
+    color: var(--color-primary);
+}
+
+.login p {
+    margin: 48px 0 0;
+    font-size: 14px;
+    color: var(--color-muted);
+}
