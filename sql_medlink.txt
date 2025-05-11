@@ -103,3 +103,16 @@ create table cita (
     constraint fk2_cita foreign key (id_medico) references medico(id_medico),
     constraint fk3_cita foreign key (id_consultorio) references consultorio(id_consultorio)
 );
+
+CREATE TABLE transaccion (
+    id_transaccion int auto_increment primary key,
+    id_cita int not null,
+    id_mp_preference varchar(255) not null,
+    id_mp_payment varchar(255) null,
+    estado_mp varchar(50) null,
+    monto decimal(10,2) not null,
+    fecha_creacion datetime default CURRENT_TIMESTAMP,
+    fecha_actualizacion datetime default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+    metodo_pago VARCHAR(50),
+    constraint fk_transaccion_cita foreign key (id_cita) references cita(id_cita) on delete cascade
+);
