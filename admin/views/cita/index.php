@@ -51,6 +51,7 @@
                                     <a href="reporte.php?accion=cita_detalle&id_cita=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-info btn-sm" title="Ver PDF" target="_blank">
                                         <i class="bi bi-file-earmark-pdf-fill"></i>
                                     </a>
+                                    <a href="<?php echo SITE_URL; ?>admin/pago.php?id_cita=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-success btn-sm" target="_blank">Pagar MP</a>
                                 </div>
                             </td>
                         </tr>

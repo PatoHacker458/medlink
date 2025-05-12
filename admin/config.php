@@ -28,6 +28,7 @@ define('MAILPASSWORD', $_ENV['MAIL_PASSWORD']);
 define('MP_ACCESS_TOKEN', $_ENV['MP_ACCESS_TOKEN']);
 define('MP_PUBLIC_KEY', $_ENV['MP_PUBLIC_KEY']);
 define('MP_ENVIRONMENT', $_ENV['MP_ENVIRONMENT']);
+define('SITE_URL', $_ENV['SITE_URL']);
 
 if (!MP_ACCESS_TOKEN) {
     error_log("ADVERTENCIA: MP_ACCESS_TOKEN no está definida. Revisa tu archivo .env y config.php.");
