@@ -51,7 +51,14 @@
                                     <a href="reporte.php?accion=cita_detalle&id_cita=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-info btn-sm" title="Ver PDF" target="_blank">
                                         <i class="bi bi-file-earmark-pdf-fill"></i>
                                     </a>
-                                    <a href="<?php echo SITE_URL; ?>admin/pago.php?id_cita=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-success btn-sm" target="_blank">Pagar MP</a>
+                                    <form action="mercadopago/crear_preferencia.php" method="POST" style="display:inline-block;">
+                                        <input type="hidden" name="id_cita" value="<?php echo $cita['id_cita']; ?>">
+                                        <input type="hidden" name="precio" value="<?php echo $cita['precio']; ?>">
+                                        <input type="hidden" name="descripcion" value="<?php echo htmlspecialchars($cita['descripcion']); ?>">
+                                        <button type="submit" class="btn btn-success btn-sm" title="Pagar">
+                                            <i class="bi bi-cash-coin"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
