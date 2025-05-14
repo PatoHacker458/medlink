@@ -1,63 +1,78 @@
-<div class="container mt-4">
-    <h1>Gestión de Citas</h1>
-    <a href="cita.php?accion=crear" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Nueva Cita</a>
+<!DOCTYPE html>
+<html lang="es">
 
-    <?php $web->alerta($alerta); ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Citas</title>
+    <link rel="stylesheet" href="..\..\..\css\styles-views.css">
+</head>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Hora</th>
-                    <th scope="col">Paciente</th>
-                    <th scope="col">Médico</th>
-                    <th scope="col">Consultorio</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (empty($citas)): ?>
+<body>
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Gestión de Citas</h1>
+            <a href="cita.php?accion=crear" class="btn btn-success"><i class="bi bi-plus-circle"></i> Nueva Cita</a>
+        </div>
+
+        <?php $web->alerta($alerta); ?>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td colspan="9" class="text-center">No hay citas registradas.</td>
+                        <th scope="col">#</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Paciente</th>
+                        <th scope="col">Médico</th>
+                        <th scope="col">Consultorio</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Opciones</th>
                     </tr>
-                <?php else: ?>
-                    <?php foreach ($citas as $cita): ?>
+                </thead>
+                <tbody>
+                    <?php if (empty($citas)): ?>
                         <tr>
-                            <th scope="row"><?php echo htmlspecialchars($cita['id_cita']); ?></th>
-                            <td><?php echo htmlspecialchars($cita['fecha']); ?></td>
-                            <td><?php echo htmlspecialchars(substr($cita['hora'], 0, 5)); ?></td>
-                            <td><?php echo htmlspecialchars($cita['paciente_nombre_completo'] ?? 'N/A'); ?></td>
-                            <td><?php echo htmlspecialchars($cita['medico_nombre_completo'] ?? 'N/A'); ?></td>
-                            <td><?php echo htmlspecialchars($cita['id_consultorio']);?></td>
-                            <td><?php echo htmlspecialchars($cita['descripcion'] ?? '-'); ?></td>
-                            <td><?php echo htmlspecialchars(isset($cita['precio']) ? '$' . number_format($cita['precio'], 2) : '-'); ?></td>
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <a href="cita.php?accion=modificar&id=<?php echo $cita['id_cita']; ?>" class="btn btn-primary btn-sm" title="Modificar">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </a>
-                                    <a href="cita.php?accion=eliminar&id=<?php echo $cita['id_cita']; ?>" class="btn btn-danger btn-sm" title="Eliminar"
-                                        onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita? Esta acción no se puede deshacer.');">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </a>
-                                    <a href="reporte.php?accion=cita_detalle&id_cita=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-info btn-sm" title="Ver PDF" target="_blank">
-                                        <i class="bi bi-file-earmark-pdf-fill"></i>
-                                    </a>
-                                    <form action="pago/pago.php" method="POST" style="display: inline;">
-                                        <input type="hidden" name="id_cita" value="<?php echo htmlspecialchars($cita); ?>">
-                                        <input type="hidden" name="precio" value="<?php echo htmlspecialchars($precio_de_la_cita); ?>">
-                                        <button type="submit">Pagar Cita</button>
-                                    </form>
-                                </div>  
-                            </td>
+                            <td colspan="9" style="text-align: center;">No hay citas registradas.</td>
                         </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                    <?php else: ?>
+                        <?php foreach ($citas as $cita): ?>
+                            <tr>
+                                <th scope="row"><?php echo htmlspecialchars($cita['id_cita']); ?></th>
+                                <td><?php echo htmlspecialchars($cita['fecha']); ?></td>
+                                <td><?php echo htmlspecialchars(substr($cita['hora'], 0, 5)); ?></td>
+                                <td><?php echo htmlspecialchars($cita['paciente_nombre_completo'] ?? 'N/A'); ?></td>
+                                <td><?php echo htmlspecialchars($cita['medico_nombre_completo'] ?? 'N/A'); ?></td>
+                                <td><?php echo htmlspecialchars($cita['id_consultorio']); ?></td>
+                                <td><?php echo htmlspecialchars(isset($cita['precio']) ? '$' . number_format($cita['precio'], 2) : '-'); ?></td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Acciones para cita <?php echo htmlspecialchars($cita['id_cita']); ?>">
+                                        <a href="cita.php?accion=modificar&id=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-primary" title="Modificar">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                        <a href="cita.php?accion=eliminar&id=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-danger" title="Eliminar"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita? Esta acción no se puede deshacer.');">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                        <a href="reporte.php?accion=cita_detalle&id_cita=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-info" title="Ver PDF" target="_blank">
+                                            <i class="bi bi-file-earmark-pdf-fill"></i>
+                                        </a>
+                                        <form action="pago/pago.php" method="POST" style="margin:0; padding:0; display:inline;">
+                                            <input type="hidden" name="id_cita" value="<?php echo htmlspecialchars($cita['id_cita']); ?>">
+                                            <input type="hidden" name="precio" value="<?php echo htmlspecialchars($cita['precio'] ?? '0.00'); ?>">
+                                            <button type="submit" class="btn btn-warning" title="Pagar Cita"><i class="bi bi-credit-card-fill"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+</body>
+
+</html>

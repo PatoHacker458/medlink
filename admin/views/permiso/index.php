@@ -12,7 +12,7 @@
   <div class="container">
 
     <h1>Permisos</h1>
-    <a class="btn btn-success" href="permiso.php?accion=crear">Nuevo Permiso</a>
+    <a class="btn btn-success" href="permiso.php?accion=crear"><i class="bi bi-plus-circle"></i> Nuevo Permiso</a>
     <table class="table">
       <thead>
         <tr>
@@ -29,10 +29,12 @@
             <td><?php echo $permiso['permiso']; ?></td>
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">
-                <a class="btn btn-primary" href="permiso.php?accion=modificar&id=<?php echo $permiso['id_permiso']; ?>">Modificar</a>
+                <a class="btn btn-primary" href="permiso.php?accion=modificar&id=<?php echo $permiso['id_permiso']; ?>">
+                  <i class="bi bi-pencil-fill"></i>
+                </a>
                 <a class="btn btn-danger" href="permiso.php?accion=eliminar&id=<?php echo $permiso['id_permiso']; ?>"
-                  onclick="return confirm('¿Estás seguro de que deseas eliminar esta permiso?');">Eliminar</a>
-
+                  onclick="return confirm('¿Estás seguro de que deseas eliminar esta permiso?');">
+                <i class="bi bi-trash-fill"></i></a>
               </div>
             </td>
 

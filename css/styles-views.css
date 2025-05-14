@@ -49,16 +49,33 @@ h1 {
     text-decoration: none;
     color: #ffffff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, transform 0.1s ease, box-shadow 0.2s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     min-width: 90px;
     display: inline-block;
+    position: relative;
+    overflow: hidden;
 }
-.btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); }
-.btn:active { transform: translateY(0px); box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+.btn:hover { 
+    opacity: 0.9; 
+    transform: translateY(-1px); 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); 
+}
+.btn:active { 
+    transform: translateY(0px); 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+}
+
+.btn:hover .bi,
+.btn:hover i[class^="bi-"], 
+.btn:hover i[class*=" bi-"] {
+    color: #000000 !important;
+}
+
+
 .btn-success { background-color: #28a745; }
 .btn-success:hover { background-color: #218838; }
 .btn-primary { background-color: #007bff; }
@@ -171,12 +188,11 @@ form .form-group input[type="checkbox"]:focus-visible {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-/* --- ESTILOS PARA LA LISTA DE PERMISOS --- */
 .permissions-group-label {
     display: block;
     margin-top: 20px;
     margin-bottom: 10px;
-    font-weight: 600; /* Hereda de 'form label' pero se puede reafirmar */
+    font-weight: 600; 
     color: #343a40;
     font-size: 0.9rem;
 }
@@ -191,25 +207,24 @@ form .form-group input[type="checkbox"]:focus-visible {
 
 .permission-item {
     display: flex;
-    align-items: center; /* Clave para alinear checkbox y label horizontalmente */
+    align-items: center; 
     margin-bottom: 10px;
-    min-width: 180px; /* Opcional: ajusta para la estética del centrado */
+    min-width: 180px; 
 }
 .permission-item:last-child {
     margin-bottom: 0;
 }
 
 .checkbox-text-label {
-    display: inline; /* Asegura que no sea display:block */
-    font-weight: normal; /* Diferente de las etiquetas principales de formulario */
-    margin-left: 0; /* El checkbox ya tiene margin-right */
+    display: inline; 
+    font-weight: normal; 
+    margin-left: 0; 
     margin-bottom: 0;
     color: #212529;
     font-size: 0.9rem;
     cursor: pointer;
-    line-height: 1.4; /* Ajusta para alinear verticalmente con el checkbox */
+    line-height: 1.4; 
 }
-/* --- FIN DE ESTILOS PARA LA LISTA DE PERMISOS --- */
 
 .form-actions {
     margin-top: 25px;
@@ -228,7 +243,7 @@ form .form-group input[type="checkbox"]:focus-visible {
     .table { font-size: 0.9rem; }
     .table th:last-child, .table td:last-child { width: auto; min-width: 0; }
     .btn-group { gap: 6px; }
-    .btn { padding: 7px 10px; font-size: 0.85rem; min-width: 80px; }
+    .btn { padding: 7px 10px; font-size: 0.85rem; min-width: 80px; border-radius: 6px;}
     h1 { font-size: 1.8rem; }
 
     form { padding: 20px 25px; margin-top: 20px; margin-bottom: 20px; }
@@ -281,11 +296,11 @@ form .form-group input[type="checkbox"]:focus-visible {
     }
 
     .permission-item {
-        min-width: 0;
-        width: 100%;
-        justify-content: center;
+        min-width: 0; 
+        width: 100%; 
+        justify-content: center; 
     }
     .checkbox-text-label {
-        font-size: 0.85rem;
+        font-size: 0.85rem; 
     }
 }

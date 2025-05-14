@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="admin/views/marca/index.php">Admin</a>
+            <a class="navbar-brand" href="/index.php">Home</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,7 +23,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            CATÁLOGOS
+                            Hospital
                         </a>
                         <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="consultorio.php">Consultorios</a></li>
@@ -34,7 +34,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            USUARIOS
+                            Personal
                         </a>
                         <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="usuario.php">Usuarios</a></li>
@@ -43,7 +43,15 @@
                         <li><a class="dropdown-item" href="paciente.php">Pacientes</a></li>
                         <li><a class="dropdown-item" href="rol.php">Roles</a></li>
                         <li><a class="dropdown-item" href="permiso.php">Permisos</a></li>
-
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Administrativo
+                        </a>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="rol.php">Roles</a></li>
+                        <li><a class="dropdown-item" href="permiso.php">Permisos</a></li>
                         </ul>
                     </li>
                 </ul>

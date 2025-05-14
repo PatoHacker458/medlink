@@ -168,7 +168,7 @@ class Paciente extends Model
     function leer()
     {
         $this->conectar();
-        $datos = $this->conn->prepare("SELECT p.*, u.correo AS correo
+        $datos = $this->conn->prepare("SELECT p.*, u.correo AS correo, CONCAT(p.nombre, ' ', p.primer_apellido) as paciente_nombre_completo
                                             FROM paciente p
                                             INNER JOIN usuario u ON p.id_usuario = u.id_usuario;");
         $datos->execute();

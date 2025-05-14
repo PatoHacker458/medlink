@@ -61,7 +61,7 @@
                                     <i class="bi bi-telephone"></i> <?php echo $medico['telefono']; ?> <br>
                                     </p>
                                 <p class="card-text schedule">
-                                    <i class="bi bi-clock"></i> Horario: <br> Por definir
+                                    <i class="bi bi-clock"></i> Horario: <br> <?php echo $medico['horario']; ?>
                                 </p>
                                 <a href="#" class="btn btn-primary">Agendar Cita</a>
                             </div>

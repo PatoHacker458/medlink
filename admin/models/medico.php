@@ -185,7 +185,7 @@ class Medico extends Model
 
     function leer(){
         $this -> conectar();
-        $datos = $this -> conn -> prepare("SELECT m.*, e.especialidad AS especialidad
+        $datos = $this -> conn -> prepare("SELECT m.*, e.especialidad AS especialidad, CONCAT(m.nombre, ' ', m.primer_apellido) as medico_nombre_completo
                                         FROM medico m
                                         INNER JOIN especialidad e ON m.id_especialidad = e.id_especialidad;");
         $datos->execute();

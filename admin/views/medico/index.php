@@ -12,7 +12,7 @@
 
     <div class="container">
         <h1>Médicos</h1>
-        <a href="medico.php?accion=crear" class="btn btn-success">Nuevo Médico</a>
+        <a href="medico.php?accion=crear" class="btn btn-success"><i class="bi bi-plus-circle"></i> Nuevo Médico</a>
 
         <table class="table">
             <thead>
@@ -32,15 +32,19 @@
                     <tr>
                         <th scope="row"><?php echo htmlspecialchars($medico['id_medico']); ?></th>
                         <td><?php echo htmlspecialchars($medico['especialidad']); ?></td>
-                        <td><?php echo htmlspecialchars($medico['nombre']); ?></td>
+                        <td><?php echo htmlspecialchars($medico['medico_nombre_completo']); ?></td>
                         <td><?php echo htmlspecialchars($medico['licencia']); ?></td>
                         <td><?php echo htmlspecialchars($medico['telefono']); ?></td>
                         <td><?php echo htmlspecialchars($medico['horario']); ?></td>
                         <td><?php echo htmlspecialchars($medico['id_consultorio']); ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Opciones">
-                                <a class="btn btn-primary" href="medico.php?accion=modificar&id=<?php echo htmlspecialchars($medico['id_medico']); ?>">Modificar</a>
-                                <a class="btn btn-danger" href="medico.php?accion=eliminar&id=<?php echo htmlspecialchars($medico['id_medico']); ?>">Eliminar</a>
+                                <a class="btn btn-primary" href="medico.php?accion=modificar&id=<?php echo htmlspecialchars($medico['id_medico']); ?>">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </a>
+                                <a class="btn btn-danger" href="medico.php?accion=eliminar&id=<?php echo htmlspecialchars($medico['id_medico']); ?>">
+                                    <i class="bi bi-trash-fill"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>

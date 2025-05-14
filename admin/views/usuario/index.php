@@ -12,7 +12,7 @@
   <div class="container">
 
     <h1>Usuarios</h1>
-    <a class="btn btn-success" href="usuario.php?accion=crear">Nuevo Usuario</a>
+    <a class="btn btn-success" href="usuario.php?accion=crear"><i class="bi bi-plus-circle"></i> Nuevo Usuario</a>
     <table class="table">
       <thead>
         <tr>
@@ -30,12 +30,15 @@
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">
                 <a class="btn btn-primary"
-                  href="usuario.php?accion=modificar&id=<?php echo $usuario['id_usuario']; ?>">Modificar</a>
+                  href="usuario.php?accion=modificar&id=<?php echo $usuario['id_usuario']; ?>">
+                  <i class="bi bi-pencil-fill"></i>
+                </a>
                 <a class="btn btn-danger" href="usuario.php?accion=eliminar&id=<?php echo $usuario['id_usuario']; ?>"
-                  onclick="return confirm('¿Estás seguro de que deseas eliminar esta usuario?');">Eliminar</a>
+                  onclick="return confirm('¿Estás seguro de que deseas eliminar esta usuario?');">
+                  <i class="bi bi-trash-fill"></i>
+                </a>
               </div>
             </td>
-
           </tr>
         <?php endforeach; ?>
       </tbody>

@@ -11,7 +11,7 @@
     <div class="container">
 
         <div class="page-header"> <h1>Roles</h1>
-            <a href="rol.php?accion=crear" class="btn btn-success">Nuevo Rol</a>
+            <a href="rol.php?accion=crear" class="btn btn-success"><i class="bi bi-plus-circle"></i> Nuevo Rol</a>
         </div>
 
         <table class="table">
@@ -29,9 +29,12 @@
                             <td><?php echo htmlspecialchars($rol['rol']); ?></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Acciones para el rol <?php echo htmlspecialchars($rol['rol']); ?>">
-                                    <a class="btn btn-primary" href="rol.php?accion=modificar&id=<?php echo htmlspecialchars($rol['id_rol']); ?>">Modificar</a>
+                                    <a class="btn btn-primary" href="rol.php?accion=modificar&id=<?php echo htmlspecialchars($rol['id_rol']); ?>">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
                                     <a class="btn btn-danger" href="rol.php?accion=eliminar&id=<?php echo htmlspecialchars($rol['id_rol']); ?>"
-                                       onclick="return confirm('¿Estás seguro de que deseas eliminar este rol?');">Eliminar</a>
+                                       onclick="return confirm('¿Estás seguro de que deseas eliminar este rol?');">
+                                    <i class="bi bi-trash-fill"></i></a>
                                 </div>
                             </td>
                         </tr>

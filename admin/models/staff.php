@@ -142,7 +142,17 @@ class Staff extends Model
 
     function leer(){
         $this -> conectar();
-        $datos = $this -> conn -> prepare("SELECT * from staff");
+        $datos = $this -> conn -> prepare("SELECT 
+                    s.*,
+                    CONCAT_WS(' ', s.nombre, s.primer_apellido, s.segundo_apellido) AS staff_nombre_completo,
+                    m.id_medico,
+                    CONCAT_WS(' ', m.nombre, m.primer_apellido, m.segundo_apellido) AS medico_nombre_completo
+                FROM 
+                    staff s
+                LEFT JOIN 
+                    medico m ON s.id_staff = m.id_staff
+                ORDER BY 
+                    s.id_staff ASC");
         $datos->execute();        
         $resultado = $datos->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;
