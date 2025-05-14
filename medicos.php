@@ -39,18 +39,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="medicos.php">Médicos</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                ADMIN
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="admin/user.php">Usuarios</a></li>
-                                <li><a class="dropdown-item" href="admin/clinic.php">Consultorios</a></li>
-                                <li><a class="dropdown-item" href="admin/medic.php">Médicos</a></li>
-                                <li><a class="dropdown-item" href="admin/staff.php">Staff</a></li>
-                            </ul>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -70,7 +58,7 @@
                                 <h5 class="card-title">Dr. <?php echo $medico['nombre'] . ' ' . $medico['primer_apellido'] . ' ' . $medico['segundo_apellido']; ?></h5>
                                 <p class="card-text specialty"><?php echo $medico['especialidad']; ?></p>
                                 <p class="card-text">
-                                    <i class="bi bi-telephone"></i> <?php echo $medico['licencia']; ?> <br>
+                                    <i class="bi bi-telephone"></i> <?php echo $medico['telefono']; ?> <br>
                                     </p>
                                 <p class="card-text schedule">
                                     <i class="bi bi-clock"></i> Horario: <br> Por definir

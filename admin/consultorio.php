@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__ . '/models/consultorio.php');
 $web = new Consultorio();
-$web -> checar('Papu');
+$web -> checar('Administrador');
 require_once (__DIR__.'/views/header.php');
 $accion = isset($_GET['accion']) ? $_GET['accion'] : null;
 $id = isset($_GET['id']) ? $_GET['id'] : null;

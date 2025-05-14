@@ -32,11 +32,7 @@
                             <td><?php echo htmlspecialchars(substr($cita['hora'], 0, 5)); ?></td>
                             <td><?php echo htmlspecialchars($cita['paciente_nombre_completo'] ?? 'N/A'); ?></td>
                             <td><?php echo htmlspecialchars($cita['medico_nombre_completo'] ?? 'N/A'); ?></td>
-                            <td>
-                                <?php
-                                echo htmlspecialchars($cita['id_consultorio']);
-                                ?>
-                            </td>
+                            <td><?php echo htmlspecialchars($cita['id_consultorio']);?></td>
                             <td><?php echo htmlspecialchars($cita['descripcion'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars(isset($cita['precio']) ? '$' . number_format($cita['precio'], 2) : '-'); ?></td>
                             <td>
@@ -51,15 +47,12 @@
                                     <a href="reporte.php?accion=cita_detalle&id_cita=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-info btn-sm" title="Ver PDF" target="_blank">
                                         <i class="bi bi-file-earmark-pdf-fill"></i>
                                     </a>
-                                    <form action="mercadopago/crear_preferencia.php" method="POST" style="display:inline-block;">
-                                        <input type="hidden" name="id_cita" value="<?php echo $cita['id_cita']; ?>">
-                                        <input type="hidden" name="precio" value="<?php echo $cita['precio']; ?>">
-                                        <input type="hidden" name="descripcion" value="<?php echo htmlspecialchars($cita['descripcion']); ?>">
-                                        <button type="submit" class="btn btn-success btn-sm" title="Pagar">
-                                            <i class="bi bi-cash-coin"></i>
-                                        </button>
+                                    <form action="pago/pago.php" method="POST" style="display: inline;">
+                                        <input type="hidden" name="id_cita" value="<?php echo htmlspecialchars($cita); ?>">
+                                        <input type="hidden" name="precio" value="<?php echo htmlspecialchars($precio_de_la_cita); ?>">
+                                        <button type="submit">Pagar Cita</button>
                                     </form>
-                                </div>
+                                </div>  
                             </td>
                         </tr>
                     <?php endforeach; ?>

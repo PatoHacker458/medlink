@@ -42,11 +42,11 @@ class Medico extends Model
 
                 $imagen = $this -> cargar_img();
                 $datos['segundo_apellido'] = isset($datos['segundo_apellido']) ? $datos['segundo_apellido'] : '';
-                $sql = "INSERT INTO medico (nombre, primer_apellido, segundo_apellido, id_usuario, licencia, id_consultorio, id_especialidad) 
+                $sql = "INSERT INTO medico (nombre, primer_apellido, segundo_apellido, id_usuario, licencia, telefono, horario, id_consultorio, id_especialidad) 
                          VALUES (:nombre, :primer_apellido, :segundo_apellido, :id_usuario, :licencia, :id_consultorio, :id_especialidad)";
                 if ($imagen) {
-                    $sql = "INSERT INTO medico (nombre, primer_apellido, segundo_apellido, id_usuario, licencia, id_consultorio, id_especialidad, fotografia) 
-                         VALUES (:nombre, :primer_apellido, :segundo_apellido, :id_usuario, :licencia, :id_consultorio, :id_especialidad, :fotografia)";
+                    $sql = "INSERT INTO medico (nombre, primer_apellido, segundo_apellido, id_usuario, licencia, telefono, horario, id_consultorio, id_especialidad, fotografia) 
+                         VALUES (:nombre, :primer_apellido, :segundo_apellido, :id_usuario, :licencia, :telefono, :horario, :id_consultorio, :id_especialidad, :fotografia)";
                 }
                 $insertar = $this -> conn -> prepare($sql);
                 $insertar -> bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
@@ -54,6 +54,8 @@ class Medico extends Model
                 $insertar -> bindParam(':segundo_apellido', $datos['segundo_apellido'] , PDO::PARAM_STR);
                 $insertar -> bindParam(':id_usuario', $datos['id_usuario'], PDO::PARAM_INT);
                 $insertar -> bindParam(':licencia', $datos['licencia'], PDO::PARAM_STR);
+                $insertar -> bindParam(':telefono', $datos['telefono'], PDO::PARAM_STR);
+                $insertar -> bindParam(':horario', $datos['horario'], PDO::PARAM_STR);
                 $insertar -> bindParam(':id_consultorio', $datos['id_consultorio'], PDO::PARAM_INT);
                 $insertar -> bindParam('id_especialidad', $datos['id_especialidad'], PDO::PARAM_INT);
                 if ($imagen) {
@@ -117,18 +119,20 @@ class Medico extends Model
             $datos['segundo_apellido'] = isset($datos['segundo_apellido']) ? $datos['segundo_apellido'] : '';
             if ($imagen) {
                 $sql = "UPDATE medico SET nombre=:nombre, primer_apellido=:primer_apellido, segundo_apellido=:segundo_apellido,
-                                licencia=:licencia, id_especialidad=:id_especialidad, id_consultorio=:id_consultorio, fotografia=:fotografia
+                                licencia=:licencia, telefono=:telefono, horario=:horario, id_especialidad=:id_especialidad, id_consultorio=:id_consultorio, fotografia=:fotografia
                                 WHERE id_medico=:id_medico;";
             } else {
                 $sql = "UPDATE medico SET nombre=:nombre, primer_apellido=:primer_apellido, segundo_apellido=:segundo_apellido,
-                                                    licencia=:licencia, id_especialidad=:id_especialidad, id_consultorio=:id_consultorio
-                                                    WHERE id_medico=:id_medico;";
+                                licencia=:licencia, telefono=:telefono, horario=:horario, id_especialidad=:id_especialidad, id_consultorio=:id_consultorio
+                                WHERE id_medico=:id_medico;";
             }
             $actualizar = $this -> conn -> prepare($sql);
             $actualizar -> bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
             $actualizar -> bindParam(':primer_apellido', $datos['primer_apellido'], PDO::PARAM_STR);
             $actualizar -> bindParam(':segundo_apellido',$datos['segundo_apellido'], PDO::PARAM_STR);
             $actualizar -> bindParam('licencia',$datos['licencia'], PDO::PARAM_STR);
+            $actualizar -> bindParam(':telefono', $datos['telefono'], PDO::PARAM_STR);
+            $actualizar -> bindParam(':horario', $datos['horario'], PDO::PARAM_STR);
             $actualizar -> bindParam(':id_especialidad', $datos['id_especialidad'], PDO::PARAM_INT);
             $actualizar -> bindParam('id_consultorio', $datos['id_consultorio'], PDO::PARAM_INT);
             $actualizar -> bindParam(':id_medico', $id, PDO::PARAM_INT);

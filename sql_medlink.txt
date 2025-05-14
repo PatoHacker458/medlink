@@ -60,6 +60,8 @@ create table medico (
     segundo_apellido varchar(50),
     licencia varchar(18) not null,
     fotografia varchar(255) default 'house.jpg',
+    telefono varchar(50) null,
+    horario varchar(50) null,
     id_usuario int not null,
     id_consultorio int not null,
     id_especialidad int not null,
@@ -104,13 +106,11 @@ create table cita (
     constraint fk3_cita foreign key (id_consultorio) references consultorio(id_consultorio)
 );
 
-CREATE TABLE transaccion (
+create table transaccion (
     id_transaccion int auto_increment primary key,
     id_cita int not null,
-    id_mp_preference varchar(255) not null,
-    id_mp_payment varchar(255) null,
-    estado_mp varchar(50) null,
     monto decimal(10,2) not null,
+    moneda varchar(10) null default 'MXN',
     fecha_creacion datetime default CURRENT_TIMESTAMP,
     fecha_actualizacion datetime default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     metodo_pago VARCHAR(50),
