@@ -32,7 +32,7 @@ switch ($accion) {
                 $mensaje = 'Estimado usuario, has solicitado un cambio de contraseña.<br>' .
                 'Por favor presione el siguiente enlace para restablecerla: <br>' .
                 '<a href="http://localhost:8080/admin/login.php?accion=restablecer&correo=' . $datos['correo'] . '&token=' . $token . '">Restablecer contraseña</a>';
-                $app -> enviar_correo($datos['correo'], 'Reestablecimiento de contraseña Medlink', $mensaje);
+                $app -> enviar_correo($datos['correo'], 'Reestablecimiento de credenciales MEDLINK', $mensaje);
             }else{
                 $alerta ['mensaje'] = 'No se pudo enviar el correo de recuperacion';
                 $alerta ['tipo'] = 'danger'; 

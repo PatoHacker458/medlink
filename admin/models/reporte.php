@@ -55,9 +55,9 @@ class Reporte extends Model{
                     .data-table th { background-color: #f2f2f2; }
                  </style>";
 
-        $html .= "<h1 class='report-title'>Detalle de Cita</h1>";
+       
 
-        $html .= "<div class='section-title'>Información General de la Cita</div>";
+        $html .= "<br><div class='section-title'>Información General de la Cita</div>";
         $html .= "<table class='data-table'>";
         $html .= "<tr><th>ID Cita:</th><td>" . htmlspecialchars($cita['id_cita']) . "</td></tr>";
         $html .= "<tr><th>Fecha:</th><td>" . htmlspecialchars(date("d/m/Y", strtotime($cita['fecha']))) . "</td></tr>";
