@@ -15,7 +15,6 @@ $alerta = $_SESSION['alerta'] ?? [];
 if (!empty($alerta)) {
     unset($_SESSION['alerta']);
 }
-
 $pacientes = $web->leerPacientes();
 $medicos = $web->leerMedicos();
 $consultorios = $web->leerConsultorios();

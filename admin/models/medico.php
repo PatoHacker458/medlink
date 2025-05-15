@@ -43,7 +43,7 @@ class Medico extends Model
                 $imagen = $this -> cargar_img();
                 $datos['segundo_apellido'] = isset($datos['segundo_apellido']) ? $datos['segundo_apellido'] : '';
                 $sql = "INSERT INTO medico (nombre, primer_apellido, segundo_apellido, id_usuario, licencia, telefono, horario, id_consultorio, id_especialidad) 
-                         VALUES (:nombre, :primer_apellido, :segundo_apellido, :id_usuario, :licencia, :id_consultorio, :id_especialidad)";
+                         VALUES (:nombre, :primer_apellido, :segundo_apellido, :id_usuario, :licencia, :telefono, :horario, :id_consultorio, :id_especialidad)";
                 if ($imagen) {
                     $sql = "INSERT INTO medico (nombre, primer_apellido, segundo_apellido, id_usuario, licencia, telefono, horario, id_consultorio, id_especialidad, fotografia) 
                          VALUES (:nombre, :primer_apellido, :segundo_apellido, :id_usuario, :licencia, :telefono, :horario, :id_consultorio, :id_especialidad, :fotografia)";
@@ -64,7 +64,7 @@ class Medico extends Model
                 $resultado = $insertar -> execute();
 
                 $sql = "INSERT INTO usuario_rol (id_usuario, id_rol) VALUES (:id_usuario, :id_rol)";
-                $roles = array(3); #Rol medico
+                $roles = array(8);
                 foreach ($roles as $rol) {
                     $insertar = $this -> conn -> prepare($sql);
                     $insertar -> bindParam(':id_usuario', $datos['id_usuario'], PDO::PARAM_INT);

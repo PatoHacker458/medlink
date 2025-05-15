@@ -13,7 +13,7 @@
     $consultorioModel = new Consultorio();
     $citaModel = new Cita();
 
-    $web->checar('Administrador'); 
+    $web->checar('Portada'); 
 
     $totalMedicos = $medicoModel->MedicoCount();
     $totalPacientes = $pacienteModel->PacienteCount();
