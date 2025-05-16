@@ -8,20 +8,20 @@ class Excel extends Model
 {
     public function obtenerConsultoriosCompletos()
     {
-        $consultorioModel = new Consultorio();
-        return $consultorioModel->leer();
+        $web = new Consultorio();
+        return $web->leer();
     }
 
     public function obtenerMedicosCompletos()
     {
-        $medicoModel = new Medico();
-        return $medicoModel->leer();
+        $web2 = new Medico();
+        return $web2->leer();
     }
 
     public function obtenerEspecialidadesCompletas()
     {
-        $especialidadModel = new Especialidad();
-        return $especialidadModel->leer(); //
+        $web3 = new Especialidad();
+        return $web3->leer();
     }
 }
 ?>
