@@ -151,6 +151,10 @@
             <span><i class="bi bi-key-fill me-2"></i>Gestionar Permisos</span>
             <i class="bi bi-arrow-right-short"></i>
         </a>
+        <a href="excel.php" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" target="_blank">
+            <span><i class="bi bi-file-earmark-excel-fill me-2"></i>Generar Reporte Excel</span>
+            <i class="bi bi-download"></i>
+        </a>
     </div>
 
 </div>
