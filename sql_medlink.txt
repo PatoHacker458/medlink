@@ -113,6 +113,15 @@ create table transaccion (
     moneda varchar(10) null default 'MXN',
     fecha_creacion datetime default CURRENT_TIMESTAMP,
     fecha_actualizacion datetime default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    metodo_pago VARCHAR(50),
+    metodo_pago varchar(50) null,
+    estado varchar(20) default 'PENDIENTE',
     constraint fk_transaccion_cita foreign key (id_cita) references cita(id_cita) on delete cascade
 );
+
+create trigger trg_transaccion_cita
+after insert on cita
+for each row
+begin
+    insert into transaccion (id_cita, monto, moneda, metodo_pago, estado)
+    values (NEW.id_cita, NEW.precio, 'MXN', NULL, 'PENDIENTE');
+end;
