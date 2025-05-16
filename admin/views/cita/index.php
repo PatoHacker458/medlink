@@ -16,8 +16,6 @@
             <a href="cita.php?accion=crear" class="btn btn-success"><i class="bi bi-plus-circle"></i> Nueva Cita</a>
         </div>
 
-        <?php $web->alerta($alerta); ?>
-
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -29,6 +27,7 @@
                         <th scope="col">Médico</th>
                         <th scope="col">Consultorio</th>
                         <th scope="col">Precio</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -47,6 +46,7 @@
                                 <td><?php echo htmlspecialchars($cita['medico_nombre_completo'] ?? 'N/A'); ?></td>
                                 <td><?php echo htmlspecialchars($cita['id_consultorio']); ?></td>
                                 <td><?php echo htmlspecialchars(isset($cita['precio']) ? '$' . number_format($cita['precio'], 2) : '-'); ?></td>
+                                <td><?php echo htmlspecialchars($cita['estado']); ?></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Acciones para cita <?php echo htmlspecialchars($cita['id_cita']); ?>">
                                         <a href="cita.php?accion=modificar&id=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-primary" title="Modificar">
@@ -59,7 +59,7 @@
                                         <a href="reporte.php?accion=cita_detalle&id_cita=<?php echo htmlspecialchars($cita['id_cita']); ?>" class="btn btn-info" title="Ver PDF" target="_blank">
                                             <i class="bi bi-file-earmark-pdf-fill"></i>
                                         </a>
-                                        <form action="pago/pago.php" method="POST" style="margin:0; padding:0; display:inline;">
+                                        <form action="pago/pago.php" method="POST" style="margin:0; padding:0; display:inline;" target="_self">
                                             <input type="hidden" name="id_cita" value="<?php echo htmlspecialchars($cita['id_cita']); ?>">
                                             <input type="hidden" name="precio" value="<?php echo htmlspecialchars($cita['precio'] ?? '0.00'); ?>">
                                             <button type="submit" class="btn btn-warning" title="Pagar Cita"><i class="bi bi-credit-card-fill"></i></button>

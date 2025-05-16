@@ -96,7 +96,6 @@ switch ($accion) {
         if (file_exists(__DIR__.'/views/cita/index.php')) {
             include(__DIR__.'/views/cita/index.php');
         } else {
-            echo '<div class="container mt-4 alert alert-warning">Vista para listar citas no encontrada (views/cita/index.php). Debes crearla.</div>';
         }
         break;
 }

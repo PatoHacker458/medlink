@@ -11,8 +11,8 @@ class Transaccion extends Model {
             return false;
         }
         
-        $sql = "INSERT INTO transaccion (id_cita, monto, metodo_pago) 
-                VALUES (:id_cita, :monto, NULL)";
+        $sql = "INSERT INTO transaccion (id_cita, monto, metodo_pago, estado) 
+                VALUES (:id_cita, :monto, NULL, 'PENDIENTE')";
 
         try {
             $stmt = $this->conn->prepare($sql);
@@ -39,7 +39,7 @@ class Transaccion extends Model {
             return false;
         }
 
-        $sql = "SELECT id_transaccion, id_cita, monto, moneda, metodo_pago, fecha_creacion, fecha_actualizacion 
+        $sql = "SELECT id_transaccion, id_cita, monto, moneda, metodo_pago, estado, fecha_creacion, fecha_actualizacion 
                 FROM transaccion 
                 WHERE id_transaccion = :id_transaccion";
         try {
@@ -52,6 +52,36 @@ class Transaccion extends Model {
             return false;
         }
     }
+
+    public function getTransaccionByCita($id_cita)
+    {
+        $this->conectar();
+        if (!$this->conn) {
+            error_log("getTransaccionByCitaId: Conexión a BD no establecida.");
+            return false;
+        }
+
+        $sql = "SELECT id_transaccion, id_cita, monto, moneda, metodo_pago, estado, fecha_creacion, fecha_actualizacion 
+            FROM transaccion 
+            WHERE id_cita = :id_cita 
+            ORDER BY id_transaccion DESC LIMIT 1";
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id_cita', $id_cita, PDO::PARAM_INT);
+            $stmt->execute();
+            $transaccion = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($transaccion) {
+                return $transaccion;
+            } else {
+                error_log("No se encontró transacción para id_cita: " . $id_cita);
+                return false;
+            }
+        } catch (PDOException $e) {
+            error_log("PDOException en getTransaccionByCitaId (id_cita: {$id_cita}): " . $e->getMessage());
+            return false;
+        }
+    }
     
     public function actualizarMetodoDePago($id_transaccion, $metodo_pago_seleccionado) {
         $this->conectar();
@@ -61,7 +91,7 @@ class Transaccion extends Model {
         }
 
         $sql = "UPDATE transaccion 
-                SET metodo_pago = :metodo_pago 
+                SET metodo_pago = :metodo_pago, estado = 'PAGADO' 
                 WHERE id_transaccion = :id_transaccion";
         try {
             $stmt = $this->conn->prepare($sql);
@@ -74,10 +104,5 @@ class Transaccion extends Model {
             return false;
         }
     }
-
-    // Podrías añadir más métodos aquí según necesites, por ejemplo:
-    // - Leer todas las transacciones
-    // - Leer transacciones por id_cita
-    // - Eliminar una transacción (considerando si es apropiado o si solo se deben cancelar)
 }
 ?>

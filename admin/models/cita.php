@@ -7,12 +7,14 @@ class Cita extends Model {
     $this->conectar();
     try {
         $sql = "SELECT c.*,
-                       CONCAT(p.nombre, ' ', p.primer_apellido) as paciente_nombre_completo,
-                       CONCAT(m.nombre, ' ', m.primer_apellido) as medico_nombre_completo
+                CONCAT(p.nombre, ' ', p.primer_apellido) as paciente_nombre_completo,
+                CONCAT(m.nombre, ' ', m.primer_apellido) as medico_nombre_completo,
+                t.estado
                 FROM cita c
                 JOIN paciente p ON c.id_paciente = p.id_paciente
                 JOIN medico m ON c.id_medico = m.id_medico
                 JOIN consultorio co ON c.id_consultorio = co.id_consultorio
+                INNER JOIN transaccion t ON c.id_cita = t.id_cita
                 ORDER BY c.fecha DESC, c.hora DESC";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
