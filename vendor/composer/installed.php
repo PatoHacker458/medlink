@@ -3,7 +3,7 @@
         'name' => 'midknight/medlink',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '589678356b955566138a064e17933d87cdfa477b',
+        'reference' => 'e7199e5406da70b71d617617a3d68c982d722451',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -121,7 +121,7 @@
         'midknight/medlink' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '589678356b955566138a064e17933d87cdfa477b',
+            'reference' => 'e7199e5406da70b71d617617a3d68c982d722451',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
