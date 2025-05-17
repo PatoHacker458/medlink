@@ -29,7 +29,6 @@
                         <li><a class="dropdown-item" href="consultorio.php">Consultorios</a></li>
                         <li><a class="dropdown-item" href="especialidad.php">Especialidades</a></li>
                         <li><a class="dropdown-item" href="cita.php">Citas</a></li>
-                        <li><a class="dropdown-item" href="transaccion.php">Transacciones</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

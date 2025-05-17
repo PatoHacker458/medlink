@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Citas</title>
-    <link rel="stylesheet" href="..\..\..\css\styles-views.css">
-</head>
+    <link rel="stylesheet" href="..\..\..\css\styles-views.css"> </head>
 
 <body>
     <div class="container">
@@ -23,7 +22,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Hora</th>
-                        <th scope="col">Paciente</th>
+                        <th scope="col">Día</th> <th scope="col">Hace/En</th> <th scope="col">Paciente</th>
                         <th scope="col">Médico</th>
                         <th scope="col">Consultorio</th>
                         <th scope="col">Precio</th>
@@ -34,14 +33,20 @@
                 <tbody>
                     <?php if (empty($citas)): ?>
                         <tr>
-                            <td colspan="9" style="text-align: center;">No hay citas registradas.</td>
-                        </tr>
+                            <td colspan="11" style="text-align: center;">No hay citas registradas.</td> </tr>
                     <?php else: ?>
                         <?php foreach ($citas as $cita): ?>
+                            <?php
+                                $fechaHoraCita = Carbon\Carbon::parse($cita['fecha'] . ' ' . $cita['hora'], 'America/Mexico_City');
+                            ?>
                             <tr>
                                 <th scope="row"><?php echo htmlspecialchars($cita['id_cita']); ?></th>
-                                <td><?php echo htmlspecialchars($cita['fecha']); ?></td>
-                                <td><?php echo htmlspecialchars(substr($cita['hora'], 0, 5)); ?></td>
+                                
+                                <td><?php echo htmlspecialchars($fechaHoraCita->isoFormat('D [de] MMMM [de] YYYY')); ?></td>
+                                <td><?php echo htmlspecialchars($fechaHoraCita->isoFormat('h:mm A')); ?></td>
+                                <td><?php echo htmlspecialchars(ucfirst($fechaHoraCita->isoFormat('dddd'))); ?></td>
+                                <td><?php echo htmlspecialchars($fechaHoraCita->diffForHumans()); ?></td>
+
                                 <td><?php echo htmlspecialchars($cita['paciente_nombre_completo'] ?? 'N/A'); ?></td>
                                 <td><?php echo htmlspecialchars($cita['medico_nombre_completo'] ?? 'N/A'); ?></td>
                                 <td><?php echo htmlspecialchars($cita['id_consultorio']); ?></td>
@@ -74,5 +79,4 @@
         </div>
     </div>
 </body>
-
 </html>

@@ -1,8 +1,16 @@
 <?php
+require_once(__DIR__ . '/../vendor/autoload.php');
 require_once (__DIR__.'/models/cita.php');
 require_once (__DIR__.'/models/paciente.php');
 require_once (__DIR__.'/models/medico.php');
 require_once (__DIR__.'/models/consultorio.php');
+
+use Carbon\Carbon;
+if (!defined('CARBON_INITIALIZED')) {
+    date_default_timezone_set('America/Mexico_City');
+    Carbon::setLocale('es');
+    define('CARBON_INITIALIZED', true);
+}
 
 $web = new Cita();
 

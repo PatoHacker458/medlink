@@ -351,21 +351,6 @@ class Model
         return true;
     }
 
-    function leerCitasNow() {
-        $this->conectar();
-        try {
-            $hoy = date('Y-m-d');
-            $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM cita WHERE fecha = :hoy");
-            $stmt->bindParam(':hoy', $hoy, PDO::PARAM_STR);
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return (int) ($result['total'] ?? 0);
-        } catch (PDOException $e) {
-            error_log("Error al contar citas de hoy: " . $e->getMessage());
-            return 0;
-        }
-    }
-
     function leerPacientes() {
         $this->conectar();
         try {
