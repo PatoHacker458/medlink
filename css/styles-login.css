@@ -1,37 +1,43 @@
 @font-face {
     font-family: 'GoogleSans-Regular';
-    src: url('fonts\GoogleSans-Regular.ttf') format('truetype');
+    src: url('fonts/GoogleSans-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 :root {
     --color-primary: #7b00f1;
-    --color-muted: #ada5b4;
+    --color-primary-rgb: 123, 0, 241;
+    --color-muted: #6c757d;
+    --color-text: #212529;
+    --color-input-bg: #f8f9fa;
+    --color-input-border: #ced4da;
 }
 
 body {
     display: grid;
     place-items: center;
     margin: 0;
-    height: 100vh;
-    background: #acbbff;
-    color: #2e2c2f;
-    transform: scale(0.9);
+    padding: 20px;
+    min-height: 100vh;
+    background: #e0e7ff;
+    color: var(--color-text);
     font-family: 'GoogleSans-Regular', sans-serif;
+    box-sizing: border-box;
 }
 
 .blob, .orbit {
     position: fixed;
-    z-index: 1;
+    z-index: -1;
     top: 50%;
     left: 50%;
     translate: -50% -50%;
 }
 
 .blob {
-    width: 80vw;
-    max-width: 700px;
+    width: 90vw;
+    max-width: 800px;
+    opacity: 0.6;
 }
 
 @keyframes spin {
@@ -42,10 +48,10 @@ body {
 
 .orbit {
     width: 100vw;
-    max-width: 720px;
+    max-width: 800px;
     height: 95vw; 
-    max-height: 720px; 
-    border: 2px solid #ffffff;
+    max-height: 800px; 
+    border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 50%;
     position: fixed;
     top: 50%;
@@ -55,53 +61,55 @@ body {
 
 @keyframes orbit-path {
     from {
-        transform: rotate(0deg) translateY(calc(-1 * min(47.5vw, 360px) + 1px)) rotate(0deg); 
+        transform: rotate(0deg) translateY(calc(-1 * min(47.5vw, 400px) + 1px)) rotate(0deg); 
     }
     to {
-        transform: rotate(360deg) translateY(calc(-1 * min(47.5vw, 360px) + 1px)) rotate(-360deg); 
+        transform: rotate(360deg) translateY(calc(-1 * min(47.5vw, 400px) + 1px)) rotate(-360deg); 
     }
 }
 
 .orbit::before, .orbit::after {
     content: "";
     position: absolute;
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     border-radius: inherit;
     background: #f39f1a;
     top: 50%; 
     left: 50%;
-    margin: -12px 0 0 -12px;
-    animation: orbit-path 10s infinite linear;
+    margin: -11px 0 0 -11px;
+    animation: orbit-path 12s infinite linear;
 }
 
 .orbit::before {
-     width: 18px;
-     height: 18px;
-     margin: -9px 0 0 -9px;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    opacity: 0.8;
 }
 
 .orbit::after {
-    animation-delay: -5s;
+    animation-delay: -6s;
 }
 
 .login {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     background: #ffffff;
-    border-radius: 24px;
-    padding: 72px 32px 48px;
-    width: 350px;
+    border-radius: 20px;
+    padding: 40px 35px 35px;
+    width: 100%;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .login img {
-    width: 96px;
-    margin: 0 0 32px;
+    width: 80px;
+    margin: 0 0 24px;
 }
 
 .login :is(h2, h3) {
@@ -109,80 +117,104 @@ body {
 }
 
 .login h2 {
-    font-size: 18px;
-    margin: 0 0 6px;
+    font-size: 24px;
+    margin: 0 0 8px;
+    color: var(--color-text);
 }
 
 .login h3 {
     color: var(--color-muted);
-    font-size: 13px;
-    margin: 0 0 32px;
+    font-size: 16px;
+    margin: 0 0 30px;
 }
 
 .login form {
     display: grid;
-    gap: 12px;
+    gap: 18px;
     width: 100%;
-    margin: 0 0 20px;
-}
-
-.login :is(input, button) {
-    height: 52px;
-    font-family: inherit;
-    font-size: 15px;
-    padding: 0 12px;
-    border: 0;
-    border-radius: 8px;
+    margin: 0 0 24px;
 }
 
 .login .textbox {
     position: relative;
 }
 
-label, input {
-    transition: 0.3s;
-}
-
 .textbox label {
     position: absolute;
     top: 50%;
-    left: 12px;
+    left: 16px;
     translate: 0 -50%;
     transform-origin: 0 50%;
     pointer-events: none;
     color: var(--color-muted);
+    transition: 0.2s ease-out;
+    font-size: 16px;
 }
 
 .textbox input {
     width: 100%;
-    padding-top: 10px;
-    background: #f4f1f7;
+    height: 56px;
+    font-family: inherit;
+    font-size: 16px;
+    padding: 18px 16px 6px 16px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    background: var(--color-input-bg);
     outline: none;
-    color: inherit;
+    color: var(--color-text);
     box-shadow: 0 0 0 2px transparent;
+    transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+    box-sizing: border-box;
 }
-.textbox input:focus ~ label, .textbox input:valid ~ label {
-    scale: 0.725;
-    translate: 0 -112%;
-} 
+.textbox input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+}
+
+.textbox input:focus ~ label, 
+.textbox input:not(:placeholder-shown) ~ label {
+    font-size: 12px;
+    translate: 0px -140%;
+    color: var(--color-primary);
+}
 
 .login button {
-    color: #f9f9f9;
+    height: 56px;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 8px;
+    color: #ffffff;
     background: var(--color-primary);
     transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
 .login button:hover {
     background: #6a00d1;
 }
 
-.login a{
+.login a {
     font-size: 14px;
     color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-.login p {
-    margin: 48px 0 0;
+.login a:hover {
+    color: #6a00d1;
+    text-decoration: underline;
+}
+
+.login p.footer {
+    margin: 32px 0 0;
     font-size: 14px;
     color: var(--color-muted);
+}
+
+.login p.footer a {
+    font-weight: 500;
+    cursor: pointer;
 }
