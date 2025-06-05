@@ -36,7 +36,7 @@ require_once __DIR__ . '/header.php';
                                 <i class="bi bi-whatsapp"></i>
                                 WhatsApp 
                             </a>
-                            <a href="<?php echo htmlspecialchars($url_login_con_redirect); ?>" class="btn btn-primary mt-2 w-100">
+                            <a href="" class="btn btn-primary mt-2 w-100">
                                 <i class="bi bi-calendar-plus"></i> Agendar Cita
                             </a>
                         </div>
