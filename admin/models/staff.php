@@ -1,5 +1,6 @@
 <?php
 require_once (__DIR__.'/../model.php');
+$web = new Model();
 
 class Staff extends Model
 {

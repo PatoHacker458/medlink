@@ -78,11 +78,6 @@ class Reporte extends Model{
         $html .= "<tr><th>Nombre:</th><td>" . htmlspecialchars($cita['medico_nombre_completo'] ?? 'N/A') . "</td></tr>";
         $html .= "<tr><th>Especialidad:</th><td>" . htmlspecialchars($cita['medico_especialidad'] ?? 'N/A') . "</td></tr>";
         $html .= "<tr><th>Licencia:</th><td>" . htmlspecialchars($cita['medico_licencia'] ?? 'N/A') . "</td></tr>";
-        $html .= "</table>";
-
-        $html .= "<div class='section-title'>Información del Consultorio</div>";
-        $html .= "<table class='data-table'>";
-        $html .= "<tr><th>Descripción:</th><td>" . htmlspecialchars($cita['consultorio_descripcion'] ?? 'N/A') . "</td></tr>";
         $html .= "<tr><th>Ubicación:</th><td>Piso " . htmlspecialchars($cita['consultorio_piso'] ?? 'N/A') . ", Habitación " . htmlspecialchars($cita['consultorio_habitacion'] ?? 'N/A') . "</td></tr>";
         $html .= "</table>";
 

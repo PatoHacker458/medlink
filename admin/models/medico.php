@@ -1,6 +1,7 @@
 <?php
 
 require_once (__DIR__.'/../model.php');
+$web = new Model();
 
 class Medico extends Model
 {
@@ -185,9 +186,10 @@ class Medico extends Model
 
     function leer(){
         $this -> conectar();
-        $datos = $this -> conn -> prepare("SELECT m.*, e.especialidad AS especialidad, CONCAT(m.nombre, ' ', m.primer_apellido) as medico_nombre_completo
+        $datos = $this -> conn -> prepare("SELECT m.*, e.especialidad AS especialidad, CONCAT(m.nombre, ' ', m.primer_apellido) as medico_nombre_completo, u.correo
                                         FROM medico m
-                                        INNER JOIN especialidad e ON m.id_especialidad = e.id_especialidad;");
+                                        INNER JOIN especialidad e ON m.id_especialidad = e.id_especialidad
+                                        INNER JOIN usuario u ON m.id_usuario = u.id_usuario;");
         $datos->execute();
         $resultado = $datos->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;
@@ -203,5 +205,37 @@ class Medico extends Model
         $resultado = $datos->fetch(PDO::FETCH_ASSOC);        
         return $resultado;
     }
+
+    public function obtenerIdMedicoLogueado() {
+        if (isset($_SESSION['validado'], $_SESSION['roles'], $_SESSION['correo']) &&
+            $_SESSION['validado'] === true &&
+            in_array('Medico', $_SESSION['roles']) &&
+            !in_array('Administrador', $_SESSION['roles'])) {
+
+            $this->conectar();
+            try {
+                $sql_user = "SELECT id_usuario FROM usuario WHERE correo = :correo";
+                $stmt_user = $this->conn->prepare($sql_user);
+                $stmt_user->bindParam(':correo', $_SESSION['correo']);
+                $stmt_user->execute();
+                $user_data = $stmt_user->fetch(PDO::FETCH_ASSOC);
+
+                if ($user_data && isset($user_data['id_usuario'])) {
+                    $sql_medico = "SELECT id_medico FROM medico WHERE id_usuario = :id_usuario";
+                    $stmt_medico = $this->conn->prepare($sql_medico);
+                    $stmt_medico->bindParam(':id_usuario', $user_data['id_usuario'], PDO::PARAM_INT);
+                    $stmt_medico->execute();
+                    $medico_data = $stmt_medico->fetch(PDO::FETCH_ASSOC);
+                    if ($medico_data && isset($medico_data['id_medico'])) {
+                        return (int)$medico_data['id_medico'];
+                    }
+                }
+            } catch (PDOException $e) {
+                return null;
+            }
+        }
+        return null;
+    }
+    
 
 }
