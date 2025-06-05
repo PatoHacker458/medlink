@@ -188,4 +188,22 @@ class Paciente extends Model
         $resultado = $datos->fetch(PDO::FETCH_ASSOC);
         return $resultado;
     }
+
+    function obtenerIdPacientePorIdUsuario($id_usuario) {
+        $this->conectar();
+        try {
+            $sql = "SELECT id_paciente FROM paciente WHERE id_usuario = :id_usuario";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+            $stmt->execute();
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($resultado && isset($resultado['id_paciente'])) {
+                return (int)$resultado['id_paciente'];
+            }
+            return false;
+        } catch (PDOException $e) {
+            error_log("Error obteniendo id_paciente por id_usuario: " . $e->getMessage());
+            return false;
+        }
+    }
 }

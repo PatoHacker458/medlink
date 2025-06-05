@@ -87,6 +87,18 @@ class Model
         $_SESSION['validado'] = false;
         $_SESSION['roles'] = [];
         $_SESSION['permisos'] = [];
+        // Eliminar cualquier id_medico pendiente de agendar si el login falla o es un nuevo intento
+        /*if(isset($_SESSION['id_medico_para_agendar'])) {
+            unset($_SESSION['id_medico_para_agendar']);
+        }*/
+        if(isset($_SESSION['agendar_cita_id_medico'])) {
+            unset($_SESSION['agendar_cita_id_medico']);
+        }
+        if(isset($_SESSION['agendar_cita_id_paciente'])) {
+            unset($_SESSION['agendar_cita_id_paciente']);
+        }
+
+
         $contrasena = md5($contrasena);
         if ($this -> validar_correo($correo)) {
             $this -> conectar();
@@ -95,36 +107,42 @@ class Model
             $stmt -> bindParam(':correo', $correo, PDO::PARAM_STR);
             $stmt -> bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
             $stmt -> execute();
-            $res = $stmt -> fetch();
+            $res = $stmt -> fetch(PDO::FETCH_ASSOC);
             if ($res) {
                 $_SESSION['validado'] = true;
                 $_SESSION['correo'] = $correo;
-                $sql = "select r.rol from  usuario u join usuario_rol ur on u.id_usuario = ur.id_usuario
-                join rol r on ur.id_rol = r.id_rol
-                where u.correo = :correo";
-                $stmt = $this -> conn -> prepare($sql);
-                $stmt -> bindParam(':correo', $correo, PDO::PARAM_STR);
-                $stmt -> execute();
-                $res = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-                foreach ($res as $rol){
-                    $roles [] = $rol['rol'];
-                }
-                $sql = "select p.permiso from  usuario u 
-                        join usuario_rol ur on u.id_usuario = ur.id_usuario
-                        join rol r on ur.id_rol = r.id_rol 
-                        join permiso_rol pr on r.id_rol = pr.id_rol
-                        join permiso p on pr.id_permiso = p.id_permiso
-                        where u.correo = :correo;";
-                $stmt = $this -> conn -> prepare($sql);
-                $stmt -> bindParam(':correo', $correo, PDO::PARAM_STR);
-                $stmt -> execute();
-                $res = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-                foreach ($res as $permiso){
-                    $permisos [] = $permiso['permiso'];
-                }
+                $_SESSION['id_usuario'] = $res['id_usuario'];
 
+                $sql_roles = "select r.rol from usuario u 
+                              join usuario_rol ur on u.id_usuario = ur.id_usuario
+                              join rol r on ur.id_rol = r.id_rol
+                              where u.id_usuario = :id_usuario";
+                $stmt_roles = $this -> conn -> prepare($sql_roles);
+                $stmt_roles -> bindParam(':id_usuario', $_SESSION['id_usuario'], PDO::PARAM_INT);
+                $stmt_roles -> execute();
+                $res_roles = $stmt_roles -> fetchAll(PDO::FETCH_ASSOC);
+                $roles = [];
+                foreach ($res_roles as $rol_item){
+                    $roles [] = $rol_item['rol'];
+                }
                 $_SESSION['roles'] = $roles;
+
+                $sql_permisos = "select p.permiso from usuario u 
+                                 join usuario_rol ur on u.id_usuario = ur.id_usuario
+                                 join rol r on ur.id_rol = r.id_rol 
+                                 join permiso_rol pr on r.id_rol = pr.id_rol
+                                 join permiso p on pr.id_permiso = p.id_permiso
+                                 where u.id_usuario = :id_usuario";
+                $stmt_permisos = $this -> conn -> prepare($sql_permisos);
+                $stmt_permisos -> bindParam(':id_usuario', $_SESSION['id_usuario'], PDO::PARAM_INT);
+                $stmt_permisos -> execute();
+                $res_permisos = $stmt_permisos -> fetchAll(PDO::FETCH_ASSOC);
+                $permisos = [];
+                foreach ($res_permisos as $permiso_item){
+                    $permisos [] = $permiso_item['permiso'];
+                }
                 $_SESSION['permisos'] = $permisos;
+                
                 return true;
             }
         }

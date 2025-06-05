@@ -1,11 +1,26 @@
 <?php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once (__DIR__.'/model.php');
+require_once (__DIR__.'/models/medico.php'); 
+require_once (__DIR__.'/models/paciente.php');
 
 $app = new Model();
 $accion = 'login';
-$accion = isset($_GET['accion']) ? $_GET['accion'] : null;
+$accion = isset($_GET['accion']) ? $_GET['accion'] : 'login';
 $alerta = [];
+
+if (isset($_GET['id_medico'])) {
+    $medicoTempModel = new Medico();
+    if ($medicoTempModel->leerUno((int)$_GET['id_medico'])) {
+        $_SESSION['id_medico_para_agendar'] = (int)$_GET['id_medico'];
+    } else {
+        if(isset($_SESSION['id_medico_para_agendar'])) unset($_SESSION['id_medico_para_agendar']);
+    }
+}
 
 switch ($accion) {
 
@@ -13,8 +28,9 @@ switch ($accion) {
         if ($app->logout()){
             $alerta ['mensaje'] = 'SESION CERRADA CORRECTAMENTE';
             $alerta ['tipo'] = 'success';
-            $app -> alerta($alerta);
-            include_once (__DIR__.'/login/login.php');
+            $_SESSION['alerta_logout'] = $alerta;
+            header('Location: login.php');
+            exit;
         }
     break;
 
@@ -109,10 +125,54 @@ switch ($accion) {
 
     case 'login':
     default:
+        if (isset($_SESSION['alerta_logout'])) {
+            $app->alerta($_SESSION['alerta_logout']);
+            unset($_SESSION['alerta_logout']);
+        }
+        if (isset($_SESSION['alerta_mensaje']) && isset($_SESSION['alerta_tipo'])) {
+            $app->alerta(['mensaje' => $_SESSION['alerta_mensaje'], 'tipo' => $_SESSION['alerta_tipo']]);
+            unset($_SESSION['alerta_mensaje']);
+            unset($_SESSION['alerta_tipo']);
+        }
+
         if (isset($_POST['enviar'])) {
             $datos = $_POST['datos'];
             if ($app->login($datos['correo'], $datos['contrasena'])){
-                header('Location: index.php');
+
+                if (isset($_SESSION['id_medico_para_agendar']) && isset($_SESSION['id_usuario']) && in_array('Paciente', $_SESSION['roles'])) {
+                    $pacienteModel = new Paciente();
+                    $id_paciente = $pacienteModel->obtenerIdPacientePorIdUsuario($_SESSION['id_usuario']);
+
+                    if ($id_paciente) {
+                        $_SESSION['agendar_cita_id_medico'] = $_SESSION['id_medico_para_agendar'];
+                        $_SESSION['agendar_cita_id_paciente'] = $id_paciente;
+                        unset($_SESSION['id_medico_para_agendar']); 
+                        
+                        if (ob_get_level() > 0) {
+                            ob_end_clean();
+                        }
+                        header('Location: cita.php?accion=crear'); 
+                        exit;
+                    } else {
+                        unset($_SESSION['id_medico_para_agendar']);
+                        $alerta ['mensaje'] = 'Error: No se encontró el registro de paciente asociado a este usuario. No se puede agendar la cita.';
+                        $alerta ['tipo'] = 'danger';
+                        $app->alerta($alerta);
+                    }
+                } else {
+                     if (isset($_SESSION['id_medico_para_agendar'])) unset($_SESSION['id_medico_para_agendar']);
+                    if (ob_get_level() > 0) {
+                        ob_end_clean();
+                    }
+                    header('Location: index.php');
+                    exit; 
+                }
+            } else {
+                 if (!isset($alerta['mensaje'])) {
+                    $alerta['mensaje'] = 'Correo o contraseña incorrectos.';
+                    $alerta['tipo'] = 'danger';
+                 }
+                 $app->alerta($alerta);
             }
         }
         include_once (__DIR__.'/login/login.php');

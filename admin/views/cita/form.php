@@ -17,46 +17,55 @@
 
             <div class="col-md-6">
                 <label for="id_paciente" class="form-label">Paciente <span class="text-danger">*</span></label>
-                <select class="form-select" id="id_paciente" name="datos[id_paciente]" required>
-                    <option value="">Selecciona un paciente...</option>
-                    <?php foreach ($pacientes as $paciente): ?>
-                        <option value="<?php echo $paciente['id_paciente']; ?>" <?php echo (isset($info['id_paciente']) && $info['id_paciente'] == $paciente['id_paciente']) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($paciente['nombre_completo']); ?>
+                <select class="form-select" id="id_paciente" name="datos[id_paciente]" required <?php if ($disable_paciente_dropdown) echo 'disabled'; ?>>
+                    <?php if (!$disable_paciente_dropdown): // Mostrar "Selecciona" solo si no está deshabilitado/preseleccionado ?>
+                        <option value="">Selecciona un paciente...</option>
+                    <?php endif; ?>
+                    <?php foreach ($pacientes as $paciente_item): ?>
+                        <?php
+                        $selected_paciente = '';
+                        if (isset($info['id_paciente']) && $info['id_paciente'] == $paciente_item['id_paciente']) {
+                            $selected_paciente = 'selected';
+                        }
+                        // Si está deshabilitado y no es el paciente preseleccionado, no mostrarlo
+                        if ($disable_paciente_dropdown && $selected_paciente === '' && isset($info['id_paciente'])) {
+                            continue;
+                        }
+                        ?>
+                        <option value="<?php echo $paciente_item['id_paciente']; ?>" <?php echo $selected_paciente; ?>>
+                            <?php echo htmlspecialchars($paciente_item['nombre_completo']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <?php if ($disable_paciente_dropdown && isset($info['id_paciente'])): ?>
+                    <input type="hidden" name="datos[id_paciente]" value="<?php echo htmlspecialchars($info['id_paciente']); ?>" />
+                <?php endif; ?>
             </div>
 
             <div class="col-md-6">
                 <label for="id_medico" class="form-label">Médico <span class="text-danger">*</span></label>
-                <select class="form-select" id="id_medico" name="datos[id_medico]" required <?php if ($disable) echo 'disabled'; ?>>
-                    
-                    <?php if (!$disable): ?>
+                <select class="form-select" id="id_medico" name="datos[id_medico]" required <?php if ($disable_medico_dropdown) echo 'disabled'; ?>>
+                     <?php if (!$disable_medico_dropdown): // Mostrar "Selecciona" solo si no está deshabilitado/preseleccionado ?>
                         <option value="">Selecciona un médico...</option>
                     <?php endif; ?>
-
-                    <?php foreach ($medicos as $medicos): ?>
+                    <?php foreach ($medicos_list as $medico_item): // Usar $medicos_list aquí ?>
                         <?php
-                        $selected = '';
-                        if ($disable) {
-                            if ($medicos['id_medico'] == $logged_medico) {
-                                $selected = 'selected';
-                            } else {
-                                continue; 
-                            }
-                        } 
-                        elseif (isset($info['id_medico']) && $info['id_medico'] == $medicos['id_medico']) {
-                            $selected = 'selected';
+                        $selected_medico = '';
+                        if (isset($info['id_medico']) && $info['id_medico'] == $medico_item['id_medico']) {
+                            $selected_medico = 'selected';
+                        }
+                        // Si está deshabilitado y no es el médico preseleccionado, no mostrarlo
+                         if ($disable_medico_dropdown && $selected_medico === '' && isset($info['id_medico'])) {
+                            continue;
                         }
                         ?>
-                        <option value="<?php echo $medicos['id_medico']; ?>" <?php echo $selected; ?>>
-                            <?php echo htmlspecialchars($medicos['nombre_completo']); ?>
+                        <option value="<?php echo $medico_item['id_medico']; ?>" <?php echo $selected_medico; ?>>
+                            <?php echo htmlspecialchars($medico_item['nombre_completo']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <?php
-                if ($disable && $logged_medico !== null): ?>
-                    <input type="hidden" name="datos[id_medico]" value="<?php echo htmlspecialchars($logged_medico); ?>" />
+                <?php if ($disable_medico_dropdown && isset($info['id_medico'])): ?>
+                    <input type="hidden" name="datos[id_medico]" value="<?php echo htmlspecialchars($info['id_medico']); ?>" />
                 <?php endif; ?>
             </div>
 

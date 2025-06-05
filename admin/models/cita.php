@@ -289,4 +289,30 @@ class Cita extends Model
             return false;
         }
     }
+
+    function leerPorMedico($id_medico) {
+        $this->conectar();
+        try {
+            $sql = "SELECT c.*, 
+                           CONCAT(p.nombre, ' ', p.primer_apellido) as paciente_nombre_completo, 
+                           CONCAT(m.nombre, ' ', m.primer_apellido) as medico_nombre_completo,
+                           co.piso as consultorio_piso,
+                           co.habitacion as consultorio_habitacion,
+                           t.estado
+                    FROM cita c
+                    JOIN paciente p ON c.id_paciente = p.id_paciente
+                    JOIN medico m ON c.id_medico = m.id_medico
+                    JOIN consultorio co ON c.id_consultorio = co.id_consultorio
+                    LEFT JOIN transaccion t ON c.id_cita = t.id_cita
+                    WHERE c.id_medico = :id_medico
+                    ORDER BY c.fecha DESC, c.hora DESC";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id_medico', $id_medico, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error leyendo citas por médico: " . $e->getMessage());
+            return [];
+        }
+    }
 }
